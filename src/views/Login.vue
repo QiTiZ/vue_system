@@ -69,7 +69,7 @@ export default {
         if (!valid) return ''
 
         const { data: res } = await this.$http.post(
-          'login/doLogin',
+          'index/login',
           this.ruleForm
         )
 
@@ -79,7 +79,7 @@ export default {
 
         this.$message.success('登录成功')
 
-        window.sessionStorage.setItem('Token', res.data.token)
+        window.sessionStorage.setItem('token', res.data.token)
 
         this.$router.push('/home')
       })

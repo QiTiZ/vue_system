@@ -7,3 +7,8 @@ body,
   width: 100%;
   height: 100%;
 }
+.el-aside {
+  height: 1000px;
+  overflow: hidden;
+  background-color: #304156;
+}
