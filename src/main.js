@@ -9,7 +9,11 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 公共样式
 import '@/assets/css/global.less'
+
+// 字体图标
+import '@/assets/font/font_mcrfmm5egc9/iconfont.css'
 
 axios.defaults.baseURL = 'http://leju.bufan.cloud/lejuAdmin/'
 
