@@ -10,7 +10,7 @@
         :collapse-transition="false"
         :default-active="defaulActive"
       >
-        <el-menu-item index="/home" @click="goHome">
+        <el-menu-item index="/welcome" @click="goHome">
           <i class="el-icon-s-home"></i>
           <span slot="title">主页</span>
         </el-menu-item>
@@ -40,6 +40,9 @@
       <el-header>
         <!-- 折叠菜单 -->
         <i :class="defaultFont" @click="foldMenu"></i>
+        <breadcrumb></breadcrumb>
+        <span>后台管理系统</span>
+        <!-- 右侧头像区域 -->
         <div class="header-right">
           <i class="right-icon">
             <el-tooltip
@@ -68,10 +71,19 @@
               <i :class="fullScreenFont" @click="fullScreen"></i>
             </el-tooltip>
           </i>
-          <el-avatar
-            :size="50"
-            src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg"
-          ></el-avatar>
+
+          <el-popover placement="bottom" width="150" trigger="click">
+            <div class="logout">
+              <span>个人中心</span>
+              <el-divider></el-divider>
+              <span @click="exit">退出账号</span>
+            </div>
+            <el-avatar
+              :size="50"
+              src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg"
+              slot="reference"
+            ></el-avatar>
+          </el-popover>
         </div>
       </el-header>
       <el-main>
@@ -95,18 +107,22 @@
 <script>
 import axios from 'axios'
 import screenfull from 'screenfull'
+import breadcrumb from '../components/breadcrumb/index.vue'
 export default {
   name: 'Home',
   data() {
     return {
       isCollapse: false,
       menuList: [],
-      defaulActive: '/home',
+      defaulActive: '/welcome',
       defaultFont: 'iconfont icon-daohangshouqi',
       fullScreenFont: 'iconfont icon-quanping_o',
       dialogVisible: false,
       isFullscreen: false
     }
+  },
+  components: {
+    breadcrumb
   },
   created() {
     this.getList()
@@ -137,12 +153,12 @@ export default {
         }
       })
 
-      console.log(mapList)
       this.menuList = mapList
     },
     goHome() {
-      this.$router.push('/home')
+      this.$router.push('/welcome')
     },
+    // 全屏
     fullScreen() {
       screenfull.toggle()
       if (this.fullScreenFont === 'iconfont icon-quanping_o') {
@@ -150,6 +166,12 @@ export default {
       } else {
         this.fullScreenFont = 'iconfont icon-quanping_o'
       }
+    },
+    // 退出账号
+    exit() {
+      window.sessionStorage.clear()
+      this.$router.push('/')
+      this.$message.success('退出账号成功')
     }
   }
 }
@@ -166,6 +188,7 @@ export default {
 
 .el-header {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #999;
@@ -194,6 +217,10 @@ export default {
       }
     }
   }
+  ::v-deep .el-breadcrumb {
+    position: absolute;
+    left: 70px;
+  }
 }
 
 ::v-deep .el-dialog__header {
@@ -202,5 +229,23 @@ export default {
 
 ::v-deep .el-dialog {
   border-radius: 15px;
+}
+
+.logout {
+  text-align: center;
+  span {
+    display: block;
+    width: 150px;
+    line-height: 30px;
+    font-size: 15px;
+    &:hover {
+      color: #409eff;
+      background-color: #e8f4ff;
+    }
+  }
+}
+
+.el-divider--horizontal {
+  margin: 8px 0;
 }
 </style>
