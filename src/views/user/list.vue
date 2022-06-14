@@ -4,12 +4,7 @@
       <el-table :data="userList" style="width: 100%" border>
         <el-table-column type="index" label="#" width="50" align="center">
         </el-table-column>
-        <el-table-column
-          prop="username"
-          label="用户名"
-          width="150"
-          align="center"
-        >
+        <el-table-column prop="username" label="用户名" align="center">
         </el-table-column>
         <el-table-column label="用户头像" width="150" align="center">
           <template slot-scope="scope">
