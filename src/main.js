@@ -13,7 +13,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/global.less'
 
 // 字体图标
-import '@/assets/font/font_mcrfmm5egc9/iconfont.css'
+import '@/assets/font/font_lifo493odf8/iconfont.css'
 
 axios.defaults.baseURL = 'http://leju.bufan.cloud/lejuAdmin/'
 

@@ -48,6 +48,27 @@
       "unicode_decimal": 58638
     },
     {
+      "icon_id": "8574987",
+      "name": "支付宝",
+      "font_class": "zhifubao",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "9306311",
+      "name": "微信支付",
+      "font_class": "weixinzhifu",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "10299090",
+      "name": "未支付",
+      "font_class": "weizhifu",
+      "unicode": "e525",
+      "unicode_decimal": 58661
+    },
+    {
       "icon_id": "14122664",
       "name": "导航收起",
       "font_class": "daohangshouqi",

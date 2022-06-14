@@ -77,8 +77,7 @@ export default {
         pageNum: 1,
         pageSize: 10
       },
-      total: 0,
-      input3: ''
+      total: 0
     }
   },
   created() {
