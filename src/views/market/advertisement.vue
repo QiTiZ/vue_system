@@ -11,9 +11,9 @@
       </el-input>
 
       <!-- 添加商品按钮 -->
-      <el-button class="addGoods" type="primary" @click="addGoods"
-        >新增广告</el-button
-      >
+      <el-button class="addGoods" type="primary" @click="addGoods">
+        新增广告
+      </el-button>
 
       <el-table :data="goodsList" style="width: 100%" border>
         <el-table-column type="index" label="#" width="50" align="center">
