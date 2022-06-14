@@ -16,22 +16,29 @@
       >
 
       <el-table :data="goodsList" style="width: 100%" border>
-        <el-table-column type="index" label="#" width="50"> </el-table-column>
-        <el-table-column prop="pic" label="商品图片" width="200">
+        <el-table-column type="index" label="#" width="50" align="center">
+        </el-table-column>
+        <el-table-column label="商品图片" width="100" align="center">
           <template slot-scope="scope">
-            <!-- <router-link></router-link> -->
             <img :src="scope.row.pic" class="table_img" />
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="名称" width="180">
+        <el-table-column prop="name" label="名称" width="180" align="center">
         </el-table-column>
-        <el-table-column prop="brandName" label="品牌" width="180">
+        <el-table-column
+          prop="brandName"
+          label="品牌"
+          width="180"
+          align="center"
+        >
         </el-table-column>
-        <el-table-column prop="price" label="价格" width="180">
+        <el-table-column prop="price" label="价格" width="180" align="center">
         </el-table-column>
-        <el-table-column prop="weight" label="数量"> </el-table-column>
-        <el-table-column prop="sort" label="库存"> </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column prop="weight" label="数量" align="center">
+        </el-table-column>
+        <el-table-column prop="sort" label="库存" align="center">
+        </el-table-column>
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editGoods(scope)"
               >编辑</el-button
@@ -123,7 +130,7 @@ export default {
 
       const { data: res } = await this.$http.delete('product/del/' + e.row.id)
 
-      if (res.code === 20001) {
+      if (res.code !== 20000) {
         return this.$message.error('删除商品失败')
       }
       this.$message.success('删除商品成功')
@@ -135,8 +142,8 @@ export default {
 
 <style lang="less" scoped>
 .table_img {
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
 }
 
 .el-input-group {
