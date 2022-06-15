@@ -1,15 +1,8 @@
 <template>
   <el-container>
     <el-aside :width="isCollapse ? '64px' : '205px'">
-      <el-menu
-        :collapse="isCollapse"
-        background-color="#304156"
-        text-color="#bfcbd9"
-        unique-opened
-        :router="true"
-        :collapse-transition="false"
-        :default-active="defaulActive"
-      >
+      <el-menu :collapse="isCollapse" background-color="#304156" text-color="#bfcbd9" unique-opened
+        :router="true" :collapse-transition="false" :default-active="defaulActive">
         <el-menu-item index="/welcome" @click="goHome">
           <i class="el-icon-s-home"></i>
           <span slot="title">主页</span>
@@ -21,11 +14,8 @@
             <span slot="title">{{ item.name }}</span>
           </template>
           <!-- 二级菜单 -->
-          <el-menu-item
-            :index="item.path + '/' + subItem.path"
-            v-for="subItem in item.children"
-            :key="subItem.id"
-          >
+          <el-menu-item :index="item.path + '/' + subItem.path" v-for="subItem in item.children"
+            :key="subItem.id">
             <template slot="title">
               <!-- 图标 -->
               <i :class="subItem.hidden === true ? '' : subItem.icon"></i>
@@ -45,44 +35,28 @@
         <!-- 右侧头像区域 -->
         <div class="header-right">
           <i class="right-icon">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="源码地址"
-              placement="bottom"
-            >
-              <a
-                href="https://github.com/QiTiZ/vue_system"
-                class="iconfont icon-github"
-                target="_blank"
-              ></a>
+            <el-tooltip class="item" effect="dark" content="源码地址" placement="bottom">
+              <a href="https://github.com/QiTiZ/vue_system" class="iconfont icon-github"
+                target="_blank"></a>
             </el-tooltip>
             <i class="iconfont icon-wenhao" @click="dialogVisible = true"></i>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              :content="
+            <el-tooltip class="item" effect="dark" :content="
                 fullScreenFont === 'iconfont icon-quanping_o'
                   ? '全屏显示'
                   : '退出全屏'
-              "
-              placement="bottom"
-            >
+              " placement="bottom">
               <i :class="fullScreenFont" @click="fullScreen"></i>
             </el-tooltip>
           </i>
 
           <el-popover placement="bottom" width="150" trigger="click">
             <div class="logout">
-              <span>个人中心</span>
+              <span @click="goPerson">个人中心</span>
               <el-divider></el-divider>
               <span @click="exit">退出账号</span>
             </div>
-            <el-avatar
-              :size="50"
-              src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg"
-              slot="reference"
-            ></el-avatar>
+            <el-avatar :size="50" src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg"
+              slot="reference"></el-avatar>
           </el-popover>
         </div>
       </el-header>
@@ -92,11 +66,7 @@
     </el-container>
 
     <!-- 后台管理系统说明弹框 -->
-    <el-dialog
-      title="后台管理系统说明"
-      :visible.sync="dialogVisible"
-      width="30%"
-    >
+    <el-dialog title="后台管理系统说明" :visible.sync="dialogVisible" width="30%">
       <span>
         一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了姗姗管理系统，它可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA等等，当然，您也可以对它进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。系统会陆续更新一些实用功能。
       </span>
@@ -166,6 +136,10 @@ export default {
       } else {
         this.fullScreenFont = 'iconfont icon-quanping_o'
       }
+    },
+    // 进入个人中心
+    goPerson() {
+      this.$router.push('/person/index')
     },
     // 退出账号
     exit() {
