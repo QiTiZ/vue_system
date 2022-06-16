@@ -61,7 +61,9 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.$nextTick(() => {
+      this.getList()
+    })
   },
   methods: {
     async getList() {
@@ -71,11 +73,10 @@ export default {
       this.goodsList = res.data.rows
 
       this.total = res.data.total
-      console.log(this.goodsList)
     },
     // 编辑商品
     editGoods(e) {
-      console.log(e)
+      this.$router.push(`/product/detail/${e.row.id}`)
     },
     // pagesize
     handleSizeChange(newSize) {

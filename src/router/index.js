@@ -32,6 +32,11 @@ const routes = [
         component: () => import('../views/goods/Addlist.vue')
       },
       {
+        path: '/product/detail/:id',
+        meta: { title: '编辑商品' },
+        component: () => import('../views/goods/detail.vue')
+      },
+      {
         path: '/product/brand',
         meta: { title: '品牌管理' },
         component: () => import('../views/goods/brand.vue')

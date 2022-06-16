@@ -4,21 +4,12 @@
       <el-table :data="brandList" border style="width: 100%">
         <el-table-column type="index" label="#" width="50" align="center">
         </el-table-column>
-        <el-table-column
-          prop="name"
-          label="品牌名称"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="name" label="品牌名称" width="180" align="center">
         </el-table-column>
         <el-table-column label="状态" width="180" align="center">
           <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.showStatus"
-              :active-value="1"
-              :inactive-value="0"
-              @change="brandStatus(scope.row)"
-            >
+            <el-switch v-model="scope.row.showStatus" :active-value="1" :inactive-value="0"
+              @change="brandStatus(scope.row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -28,30 +19,16 @@
           </template>
         </el-table-column>
 
-        <el-table-column
-          label="品牌故事"
-          prop="brandStory"
-          width="300"
-          align="center"
-        >
+        <el-table-column label="品牌故事" prop="brandStory" width="300" align="center">
         </el-table-column>
 
-        <el-table-column
-          label="创建时间"
-          prop="createTime"
-          width="180"
-          align="center"
-        >
+        <el-table-column label="创建时间" prop="createTime" width="180" align="center">
         </el-table-column>
 
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="editGoods(scope)"
-              >编辑</el-button
-            >
-            <el-button size="mini" type="danger" @click="delBrand(scope.row)"
-              >删除</el-button
-            >
+            <el-button size="mini" type="primary" @click="editGoods(scope)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="delBrand(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -78,7 +55,6 @@ export default {
         return this.$message.error('获取品牌列表失败')
       }
       this.brandList = res.data.items
-      console.log(this.brandList)
     },
     async brandStatus(e) {
       const { data: res } = await this.$http.post('brand/switchShowStatus', {

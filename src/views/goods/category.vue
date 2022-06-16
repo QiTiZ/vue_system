@@ -1,12 +1,7 @@
 <template>
   <el-card>
-    <el-table
-      :data="categoryList"
-      style="width: 100%; margin-bottom: 20px"
-      border
-      row-key="id"
-      :tree-props="{ children: 'children' }"
-    >
+    <el-table :data="categoryList" style="width: 100%; margin-bottom: 20px" border row-key="id"
+      :tree-props="{ children: 'children' }">
       <el-table-column prop="name" label="类目" width="180"> </el-table-column>
       <el-table-column label="图片" width="180" align="center">
         <template slot-scope="scope">
@@ -23,12 +18,7 @@
       </el-table-column>
       <el-table-column prop="sort" label="排序" width="180" align="center">
       </el-table-column>
-      <el-table-column
-        prop="description"
-        label="描述"
-        width="200"
-        align="center"
-      >
+      <el-table-column prop="description" label="描述" width="200" align="center">
       </el-table-column>
       <el-table-column label="创建时间" align="center">
         <template>
@@ -65,8 +55,6 @@ export default {
         obj.children = item.children
         return obj
       })
-
-      console.log(this.categoryList)
     }
   }
 }

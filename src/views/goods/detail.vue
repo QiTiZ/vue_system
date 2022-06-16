@@ -24,7 +24,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="商品编码">
-                <el-input v-model="form.productSn"></el-input>
+                <el-input v-model="form.productCategoryId"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -79,7 +79,7 @@
       <div v-show="step === 3">
         <div class="title">详情描述</div>
         <el-divider></el-divider>
-        asasas
+        asasa
         <el-button size="mini" class="prev" @click="prev">返回上一步</el-button>
         <el-button type="primary" size="mini" class="next" @click="addGoods">提交保存</el-button>
 
@@ -95,6 +95,7 @@ export default {
     return {
       active: 1,
       step: 1,
+      id: '',
       form: {
         productSn: '',
         name: '', // 名字
@@ -115,6 +116,7 @@ export default {
     }
   },
   created() {
+    this.id = this.$route.params.id
     this.getCatoryList()
   },
   methods: {
@@ -128,8 +130,13 @@ export default {
     },
     // 获取商品分类
     async getCatoryList() {
-      const { data: res } = await this.$http.get('brand/findAllBrand')
-      this.categoryName = res.data.items
+      const { data: res } = await this.$http.get(
+        `product/productSkusDetail/${this.id}`
+      )
+      this.form = res.data.product
+
+      const { data: resS } = await this.$http.get('brand/findAllBrand')
+      this.categoryName = resS.data.items
     },
     async addGoods() {
       var brandName = ''
@@ -139,19 +146,22 @@ export default {
         }
       })
 
-      const { data: res } = await this.$http.post('product/addProductAndSkus', {
-        pmsSkuStockList: [],
-        product: {
-          ...this.form,
-          brandName
+      const { data: res } = await this.$http.post(
+        'product/updateProductAndSkus',
+        {
+          pmsSkuStockList: [],
+          product: {
+            ...this.form,
+            brandName
+          }
         }
-      })
+      )
 
       if (res.code !== 20000) {
         return this.$message.error('添加商品失败')
       }
       this.$message.success('添加商品成功')
-      this.$router.push('list')
+      this.$router.push('/product/list')
     }
   }
 }
