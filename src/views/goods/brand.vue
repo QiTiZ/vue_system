@@ -1,6 +1,30 @@
 <template>
   <div>
     <el-card>
+      <el-button type="primary" @click="dialogVisible = true">新增品牌</el-button>
+      <!-- 新增品牌提示框 -->
+      <el-dialog title="新增品牌" :visible.sync="dialogVisible" width="60%">
+        <el-form :model="brandForm" :rules="rules" ref="brandForm" label-width="100px"
+          class="demo-brandForm">
+
+          <el-form-item label="品牌名称" prop="name">
+            <el-input v-model="brandForm.name" placeholder="请输入品牌名称"></el-input>
+          </el-form-item>
+          <el-form-item label="品牌故事">
+            <el-input v-model="brandForm.brandStory" placeholder="请输入品牌故事"></el-input>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-switch v-model="brandForm.showStatus" :active-value="1" :inactive-value="0">
+            </el-switch>
+
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addBrand">确 定</el-button>
+        </span>
+      </el-dialog>
+
       <el-table :data="brandList" border style="width: 100%">
         <el-table-column type="index" label="#" width="50" align="center">
         </el-table-column>
@@ -41,7 +65,21 @@ export default {
   name: '',
   data() {
     return {
-      brandList: []
+      brandList: [],
+      value1: '',
+      dialogVisible: false,
+      brandForm: {
+        name: '',
+        brandStory: '',
+        createTime: '',
+        showStatus: 1
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
@@ -95,6 +133,20 @@ export default {
       this.$message.success('删除品牌成功')
 
       this.getBrandList()
+    },
+    async addBrand() {
+      const { data: res } = await this.$http.post(
+        'brand/addBrand',
+        this.brandForm
+      )
+
+      if (res.code !== 20000) {
+        return this.$message.error('新增品牌失败')
+      }
+      this.$message.success('新增品牌成功')
+
+      this.dialogVisible = false
+      this.getBrandList()
     }
   }
 }
@@ -104,5 +156,8 @@ export default {
 .logoImg {
   width: 100px;
   height: 100px;
+}
+.el-button {
+  margin-bottom: 15px;
 }
 </style>

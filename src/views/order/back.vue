@@ -4,66 +4,38 @@
       <el-table :data="orderList" style="width: 100%" border stripe>
         <el-table-column type="index" label="#" width="50" align="center">
         </el-table-column>
-        <el-table-column
-          prop="orderSn"
-          label="订单编号"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="orderSn" label="订单编号" width="180" align="center">
         </el-table-column>
         <el-table-column label="退单状态" width="120" align="center">
           <template slot-scope="scope">
-            <span v-if="scope.row.status === 3">
-              <el-button size="mini" type="info" plain>已拒绝</el-button>
+            <span v-if="scope.row.status === 0">
+              <el-tag type="danger" effect="dark">待处理</el-tag>
+            </span>
+            <span v-if="scope.row.status === 1">
+              <el-tag type="primary" effect="dark">退货中</el-tag>
             </span>
             <span v-if="scope.row.status === 2">
-              <el-button size="mini" type="primary" plain>已完成</el-button>
+              <el-tag type="primary" effect="dark">已完成</el-tag>
             </span>
+            <span v-if="scope.row.status === 3">
+              <el-tag type="warning" effect="dark">已拒绝</el-tag>
+            </span>
+
           </template>
         </el-table-column>
-        <el-table-column
-          prop="description"
-          label="描述"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="description" label="描述" width="180" align="center">
         </el-table-column>
-        <el-table-column
-          prop="reason"
-          label="退单原因"
-          width="120"
-          align="center"
-        >
+        <el-table-column prop="reason" label="退单原因" width="120" align="center">
         </el-table-column>
-        <el-table-column
-          prop="productName"
-          label="商品名称"
-          width="120"
-          align="center"
-        >
+        <el-table-column prop="productName" label="商品名称" width="120" align="center">
         </el-table-column>
-        <el-table-column
-          prop="handleNote"
-          label="商家备注"
-          width="130"
-          align="center"
-        >
+        <el-table-column prop="handleNote" label="商家备注" width="130" align="center">
         </el-table-column>
-        <el-table-column
-          prop="createTime"
-          label="创建时间"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="createTime" label="创建时间" width="180" align="center">
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              class="el-icon-aim"
-              @click="lookOrder(scope)"
-            >
+            <el-button size="mini" type="primary" class="el-icon-aim" @click="lookOrder(scope)">
               查看订单
             </el-button>
           </template>
@@ -72,15 +44,10 @@
 
       <!-- 分页 -->
       <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.pageNum"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="queryInfo.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        >
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          :current-page="queryInfo.pageNum" :page-sizes="[10, 20, 30, 40]"
+          :page-size="queryInfo.pageSize" layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
         </el-pagination>
       </div>
     </el-card>
