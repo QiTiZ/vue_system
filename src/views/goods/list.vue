@@ -2,18 +2,12 @@
   <div>
     <el-card>
       <!-- 搜索区域 -->
-      <el-input
-        placeholder="请输入内容"
-        v-model="input3"
-        class="input-with-select"
-      >
+      <el-input placeholder="请输入内容" class="input-with-select">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
 
       <!-- 添加商品按钮 -->
-      <el-button class="addGoods" type="primary" @click="addGoods"
-        >添加商品</el-button
-      >
+      <el-button class="addGoods" type="primary" @click="addGoods">添加商品</el-button>
 
       <el-table :data="goodsList" style="width: 100%" border>
         <el-table-column type="index" label="#" width="50" align="center">
@@ -25,12 +19,7 @@
         </el-table-column>
         <el-table-column prop="name" label="名称" width="180" align="center">
         </el-table-column>
-        <el-table-column
-          prop="brandName"
-          label="品牌"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="brandName" label="品牌" width="180" align="center">
         </el-table-column>
         <el-table-column prop="price" label="价格" width="180" align="center">
         </el-table-column>
@@ -40,27 +29,18 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="editGoods(scope)"
-              >编辑</el-button
-            >
-            <el-button size="mini" type="danger" @click="delGoods(scope)"
-              >删除</el-button
-            >
+            <el-button size="mini" type="primary" @click="editGoods(scope)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="delGoods(scope)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 分页 -->
       <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.pageNum"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="queryInfo.pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        >
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          :current-page="queryInfo.pageNum" :page-sizes="[10, 20, 30, 40]"
+          :page-size="queryInfo.pageSize" layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
         </el-pagination>
       </div>
     </el-card>
@@ -107,7 +87,7 @@ export default {
       this.getList()
     },
     addGoods() {
-      this.$message.success('明天写')
+      this.$router.push('/product/addDetail')
     },
     async delGoods(e) {
       const confirmDemo = await this.$confirm(

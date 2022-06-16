@@ -27,6 +27,11 @@ const routes = [
         component: () => import('../views/goods/category.vue')
       },
       {
+        path: '/product/addDetail',
+        meta: { title: '新增商品' },
+        component: () => import('../views/goods/Addlist.vue')
+      },
+      {
         path: '/product/brand',
         meta: { title: '品牌管理' },
         component: () => import('../views/goods/brand.vue')
