@@ -2,36 +2,21 @@
   <div class="login">
     <!-- 头像区域 -->
     <div class="avator">
-      <el-avatar
-        :size="150"
-        src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg"
-      ></el-avatar>
+      <el-avatar :size="150" src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg">
+      </el-avatar>
     </div>
 
     <!-- 登录表格区域 -->
     <div class="login_form">
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="loginFormRef"
-        label-width="0px"
-      >
+      <el-form :model="ruleForm" :rules="rules" ref="loginFormRef" label-width="0px">
         <el-form-item prop="username">
-          <el-input
-            prefix-icon="el-icon-user-solid"
-            v-model="ruleForm.username"
-            placeholder="Username"
-          ></el-input>
+          <el-input prefix-icon="el-icon-user-solid" v-model="ruleForm.username"
+            placeholder="Username"></el-input>
         </el-form-item>
 
         <el-form-item prop="password">
-          <el-input
-            type="password"
-            show-password
-            prefix-icon="el-icon-lock"
-            v-model="ruleForm.password"
-            placeholder="Password"
-          ></el-input>
+          <el-input type="password" show-password prefix-icon="el-icon-lock"
+            v-model="ruleForm.password" placeholder="Password"></el-input>
         </el-form-item>
       </el-form>
 
@@ -41,6 +26,7 @@
 </template>
 
 <script>
+// http://leju.bufan.cloud/admin/sysAuth/user/saveUserRoles
 export default {
   name: '',
   data() {

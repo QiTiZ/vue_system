@@ -2,9 +2,8 @@
   <div>
     <el-card>
       <el-button type="primary" @click="showAddressDialog">新增地址</el-button>
-
-      <el-dialog title="新增地址" :visible.sync="AddDialogVisible" width="50%">
-        <el-form :model="ruleForm" ref="ruleForm" label-width="120px" class="demo-ruleForm">
+      <el-dialog title="新增地址" :visible.sync="AddDialogVisible" width="50%" @close="addAddressClose">
+        <el-form :model="ruleForm" ref="addAddressRef" label-width="120px">
           <el-form-item label="收货地址">
             <el-cascader size="large" :options="options" v-model="ruleForm.cityCode">
             </el-cascader>
@@ -35,7 +34,6 @@
         </el-table-column>
         <el-table-column prop="addressName" label="地址名称" width="180" align="center">
         </el-table-column>
-
         <el-table-column prop="name" label="收货人" width="120" align="center">
         </el-table-column>
         <el-table-column prop="phone" label="联系方式" width="120" align="center">
@@ -54,16 +52,44 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="editAddress(scope)">编辑</el-button>
+            <el-button size="mini" type="primary" @click="editAddress(scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="delAddress(scope)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 编辑地址 -->
+      <el-dialog title="新增地址" :visible.sync="editDialogVisible" width="50%"
+        @close="addAddressClose">
+        <el-form :model="ruleForm" ref="addAddressRef" label-width="120px">
+          <el-form-item label="收货地址">
+            <el-cascader size="large" :options="options" v-model="ruleForm.cityCode">
+            </el-cascader>
+          </el-form-item>
+          <el-form-item label="地址名称">
+            <el-input v-model="ruleForm.addressName" placeholder="地址名称"></el-input>
+          </el-form-item>
+          <el-form-item label="收货人姓名">
+            <el-input v-model="ruleForm.name" placeholder="收货人姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="收货人手机号">
+            <el-input v-model="ruleForm.phone" placeholder="收货人手机号"></el-input>
+          </el-form-item>
+          <el-form-item label="详细地址">
+            <el-input v-model="ruleForm.detailAddress" placeholder="详细地址"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editAddressEnter">确 定</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
 
 <script>
+// 地址信息
 import { regionData, CodeToText } from 'element-china-area-data'
 
 export default {
@@ -72,6 +98,7 @@ export default {
     return {
       addressList: [],
       AddDialogVisible: false,
+      editDialogVisible: false,
       ruleForm: {
         addressName: '',
         name: '',
@@ -95,7 +122,6 @@ export default {
       }
 
       this.addressList = res.data.items
-      console.log(this.addressList)
       this.total = res.data.total
     }, // pagesize
     handleSizeChange(newSize) {
@@ -109,8 +135,17 @@ export default {
     showAddressDialog() {
       this.AddDialogVisible = true
     },
-    editAddress() {
-      this.$message.success('明天写')
+    // 获取编辑地址数据
+    async editAddress(e) {
+      const { data: res } = await this.$http(`companyAddress/${e.id}`)
+      this.ruleForm = res.data.address
+      this.editDialogVisible = true
+    },
+    // 编辑地址
+    async editAddressEnter() {
+      // const { data: res } = await this.$$http.post('companyAddress/update', {
+      //   ...this.ruleForm
+      // })
     },
     async delAddress(e) {
       const confirmDemo = await this.$confirm(
@@ -140,7 +175,9 @@ export default {
       this.$message.success('删除地址成功')
       this.getaddressList()
     },
-
+    addAddressClose() {
+      this.$refs.addAddressRef.resetFields()
+    },
     async addAddress() {
       const { data: res } = await this.$http.post('companyAddress/save', {
         ...this.ruleForm,

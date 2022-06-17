@@ -7,6 +7,20 @@
           <i class="el-icon-s-home"></i>
           <span slot="title">主页</span>
         </el-menu-item>
+        <el-submenu index="/auth">
+          <template slot="title">
+            <i class="el-icon-message-solid"></i>
+            <span slot="title">权限管理</span>
+          </template>
+          <el-menu-item index="/auth/user" @click="goUser">
+            <i class="el-icon-s-home"></i>
+            <span slot="title">账号管理</span>
+          </el-menu-item>
+          <el-menu-item index="/auth/roles" @click="goRoles">
+            <i class="el-icon-s-home"></i>
+            <span slot="title">角色管理</span>
+          </el-menu-item>
+        </el-submenu>
         <!-- 一级菜单 -->
         <el-submenu :index="item.path" v-for="item in menuList" :key="item.id">
           <template slot="title">
@@ -127,6 +141,12 @@ export default {
     },
     goHome() {
       this.$router.push('/welcome')
+    },
+    goRoles() {
+      this.$router.push('/auth/roles')
+    },
+    goUser() {
+      this.$router.push('/auth/user')
     },
     // 全屏
     fullScreen() {

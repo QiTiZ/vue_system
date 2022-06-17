@@ -17,6 +17,16 @@ const routes = [
         component: () => import('../views/Welcome.vue')
       },
       {
+        path: '/auth/user',
+        meta: { title: '账号管理' },
+        component: () => import('../views/auth/user.vue')
+      },
+      {
+        path: '/auth/roles',
+        meta: { title: '角色管理' },
+        component: () => import('../views/auth/roles.vue')
+      },
+      {
         path: '/product/list',
         meta: { title: '商品列表' },
         component: () => import('../views/goods/list.vue')
