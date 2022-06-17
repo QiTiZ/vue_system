@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <el-button type="primary" @click="addDialogVisible = true">新增角色</el-button>
+      <el-button type="primary" @click="addDialogVisible = true">新增用户</el-button>
 
       <!-- 新增角色对话框 -->
       <el-dialog title="提示" :visible.sync="addDialogVisible" width="50%">
@@ -30,6 +30,7 @@
           <el-button type="primary" @click="addUsername">确 定</el-button>
         </span>
       </el-dialog>
+
       <el-divider></el-divider>
 
       <el-table :data="userList" style="width: 100%" border stripe>
@@ -51,7 +52,7 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="editGoods(scope)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="delGoods(scope)">删除</el-button>
+            <el-button size="mini" type="danger" @click="delUsername(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,6 +74,7 @@ export default {
       userList: [],
       roleSlist: [],
       addDialogVisible: false,
+      visible: false,
       ruleForm: {
         username: '',
         nick_name: '',
@@ -128,10 +130,40 @@ export default {
         }
       )
       if (res.code !== 20000) {
-        return this.$message.error('新增角色失败')
+        return this.$message.error('新增用户失败')
       }
-      this.$message.success('新增角色成功')
+      this.$message.success('新增用户成功')
       this.addDialogVisible = false
+      this.getUserList()
+    },
+    async delUsername(e) {
+      console.log(e)
+      const confirmDemo = await this.$confirm(
+        '此操作将永久删除该用户, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }
+      ).catch((err) => {
+        return err
+      })
+
+      if (confirmDemo !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
+
+      const { data: res } = await axios.delete(
+        `http://leju.bufan.cloud/admin/sysAuth/user/removeUser/${e.id}`
+      )
+
+      if (res.code !== 20000) {
+        return this.$message.error('删除用户失败')
+      }
+      this.$message.success('删除用户成功')
+
       this.getUserList()
     }
   }
