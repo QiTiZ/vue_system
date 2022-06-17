@@ -29,7 +29,7 @@
                 <i>{{item.subTitle}}</i>
               </div>
               <div class="right">
-                <el-switch v-model="item.staus" :active-value="1" :inactive-color="0">
+                <el-switch v-model="item.staus" :active-value="1" :inactive-value="0">
                 </el-switch>
               </div>
             </div>
@@ -41,54 +41,45 @@
 </template>
 
 <script>
+import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: '',
   data() {
     return {
-      value: true,
-      securityData: [
-        {
-          title: '账号密码',
-          subTitle: '当前密码强度: 强'
-        },
-        {
-          title: '密保手机',
-          subTitle: '已绑定手机：138****8293'
-        },
-        {
-          title: '密保问题',
-          subTitle: '未设置密保问题，密保问题可有效保护账户安全'
-        },
-        {
-          title: '登录设备',
-          subTitle: 'IPhone 13 Pro Max'
-        },
-        {
-          title: '邮箱',
-          subTitle: '8888888@163.com'
-        }
-      ],
-      messageSetting: [
-        {
-          title: '账号通知',
-          staus: 1,
-          subTitle: '其他用户的消息将以站内信的形式通知'
-        },
-        {
-          title: '系统消息',
-          staus: 0,
-          subTitle: '系统消息将以站内信的形式通知'
-        },
-        {
-          title: '待办任务',
-          staus: 1,
-          subTitle: '待办任务将以站内信的形式通知'
-        }
-      ]
+      securityData: [],
+      messageSetting: []
     }
   },
-  created() {},
-  methods: {}
+  created() {
+    this.getList()
+  },
+  methods: {
+    // ?
+    async getList() {
+      const { data: res1 } = await axios.get(
+        'https://mock.apifox.cn/m1/831144-0-default/person/security',
+        {
+          params: {
+            apifoxToken: '3MLUl0vd62ogpwPyL6ZxQ3z2luegg4FD'
+          }
+        }
+      )
+
+      this.securityData = res1
+
+      const { data: res } = await axios.get(
+        'https://mock.apifox.cn/m1/831144-0-default/person/setting',
+        {
+          params: {
+            apifoxToken: '3MLUl0vd62ogpwPyL6ZxQ3z2luegg4FD'
+          }
+        }
+      )
+
+      this.messageSetting = res
+    }
+  }
 }
 </script>
 

@@ -118,6 +118,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: '',
   data() {
@@ -125,178 +126,15 @@ export default {
       dynamicTags: ['大佬', '菜鸟', '技术好', '不加班', '不熬夜', '早睡早起'],
       inputVisible: false,
       inputValue: '',
-      group: [
-        {
-          title: '前端开发组',
-          img: 'https://v3.cn.vuejs.org/logo.png'
-        },
-        {
-          title: 'UI设计组',
-          img: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg'
-        },
-        {
-          title: '测试组',
-          img: 'https://fastly.jsdelivr.net/npm/@vant/assets/logo.png'
-        },
-        {
-          title: '运维组',
-          img: 'https://www.runoob.com/wp-content/uploads/2013/10/bs.png'
-        },
-        {
-          title: '支付组',
-          img: 'https://img.alicdn.com/tfs/TB1qEwuzrj1gK0jSZFOXXc7GpXa-32-32.ico'
-        },
-        {
-          title: '技术支持组',
-          img: 'https://vitejs.cn/logo.svg'
-        }
-      ],
+      group: [],
       activeName: '1',
-      techNote: [
-        {
-          Mvvm: 'Vue',
-          dynamicTags: [
-            { name: 'Vue', type: '' },
-            { name: 'ELement-Ui', type: 'success' },
-            { name: '前端框架', type: 'info' }
-          ],
-          createTime: '2022-06-15 10:52',
-          p: '主题：ElementUI是一套基于Vue的桌面端组件库，ElementUI提供了丰富的组件帮助开发人员快速构建功能强大、风格统一的页面。'
-        },
-        {
-          Mvvm: 'React',
-          dynamicTags: [
-            { name: 'React', type: '' },
-            { name: 'Ant-Ui', type: 'success' },
-            { name: '前端框架', type: 'info' }
-          ],
-          createTime: '2022-02-05 11:52',
-          p: '主题：React 使创建交互式 UI 变得轻而易举。为你应用的每一个状态设计简洁的视图，当数据改变时 React 能有效地更新并正确地渲染组件。'
-        },
-        {
-          Mvvm: 'JavaScript',
-          dynamicTags: [
-            { name: 'JavaScript', type: '' },
-            { name: '脚本语言', type: 'success' },
-            { name: '动态性', type: 'info' }
-          ],
-          createTime: '2022-03-18 01:18',
-          p: '主题：JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式、声明式、函数式编程范式。'
-        },
-        {
-          Mvvm: 'BootStrap',
-          dynamicTags: [
-            { name: 'BootStrap', type: '' },
-            { name: 'Less', type: 'success' },
-            { name: 'JavaScript 插件', type: 'info' }
-          ],
-          createTime: '2022-04-22 05:24',
-          p: '主题：Bootstrap是美国Twitter公司的设计师Mark Otto和Jacob Thornton合作基于HTML、CSS、JavaScript 开发的简洁、直观、强悍的前端开发框架，使得 Web 开发更加快捷。Bootstrap提供了优雅的HTML和CSS规范，它即是由动态CSS语言Less写成。'
-        },
-        {
-          Mvvm: 'Vite',
-          dynamicTags: [
-            { name: 'Vite', type: '' },
-            { name: 'ESM', type: 'success' },
-            { name: '速度极快', type: 'info' }
-          ],
-          createTime: '2022-05-17 17:52',
-
-          p: '主题：Vite是下一代前端开发与构建工具。Vite意在提供开箱即用的配置，同时它的插件API和JavaScript API 带来了高度的可扩展性，并有完整的类型支持'
-        },
-        {
-          Mvvm: 'Vant',
-          dynamicTags: [
-            { name: 'Vant', type: '' },
-            { name: 'Vant-Ui', type: 'success' },
-            { name: '前端框架', type: 'info' }
-          ],
-          createTime: '2022-06-15 19:34',
-
-          p: '主题：Vant 是一个轻量、可靠的移动端组件库，于 2017 年开源。'
-        },
-        {
-          Mvvm: 'Webpack',
-          dynamicTags: [
-            { name: 'Webpack', type: '' },
-            { name: '打包工具', type: 'success' }
-          ],
-          createTime: '2022-06-23 22:22',
-
-          p: '主题：webpack 是代码编译工具，有入口、出口、loader 和插件。webpack 是一个用于现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个依赖图(dependency graph)，此依赖图对应映射到项目所需的每个模块，并生成一个或多个 bundle。'
-        }
-      ],
-      Xmvideo: [
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        },
-        {
-          title: '去见想见的人',
-          createTime: '一天前',
-          desc: '去见你的路上 风都是甜的 如果是去见你那我会用跑的 如果关于你那肯定都是好的'
-        }
-      ]
+      techNote: [],
+      Xmvideo: []
     }
   },
-  created() {},
+  created() {
+    this.getTechnoteList()
+  },
   methods: {
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
@@ -317,8 +155,42 @@ export default {
       this.inputVisible = false
       this.inputValue = ''
     },
-    handleClick(tab, event) {
-      console.log(tab, event)
+    async getTechnoteList() {
+      const { data: res1 } = await axios.get(
+        'https://mock.apifox.cn/m1/831144-0-default/person/index',
+        {
+          params: {
+            apifoxToken: '3MLUl0vd62ogpwPyL6ZxQ3z2luegg4FD'
+          }
+        }
+      )
+
+      this.group = res1
+
+      const { data: res } = await axios.get(
+        'https://mock.apifox.cn/m1/831144-0-default/user/index',
+        {
+          params: {
+            apifoxToken: '3MLUl0vd62ogpwPyL6ZxQ3z2luegg4FD'
+          }
+        }
+      )
+
+      this.techNote = res
+    },
+    async handleClick(tab) {
+      if (tab.index === '1') {
+        const { data: res } = await axios.get(
+          'https://mock.apifox.cn/m1/831144-0-default/user/list',
+          {
+            params: {
+              apifoxToken: '3MLUl0vd62ogpwPyL6ZxQ3z2luegg4FD'
+            }
+          }
+        )
+
+        this.Xmvideo = res
+      }
     }
   }
 }
