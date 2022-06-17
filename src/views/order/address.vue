@@ -1,35 +1,30 @@
 <template>
   <div>
     <el-card>
-      <el-button type="primary" @click="addAddress">新增地址</el-button>
+      <el-button type="primary" @click="showAddressDialog">新增地址</el-button>
 
-      <el-dialog title="提示" :visible.sync="AddDialogVisible" width="50%">
-        <el-form :model="ruleForm" :rules="ruleFormRules" ref="ruleForm" label-width="120px"
-          class="demo-ruleForm">
-          <el-form-item label="发货地址" prop="name">
-            <el-input v-model="ruleForm.name" placeholder="发货地址"></el-input>
-          </el-form-item>
-          <el-form-item label="发货人姓名">
-            <el-input v-model="ruleForm.name" placeholder="发货人姓名"></el-input>
-          </el-form-item>
-          <el-form-item label="发货人手机号">
-            <el-input v-model="ruleForm.name" placeholder="发货人手机号"></el-input>
-          </el-form-item>
-          <el-form-item label="邮政编码">
-            <el-input v-model="ruleForm.name" placeholder="邮政编码"></el-input>
-          </el-form-item>
+      <el-dialog title="新增地址" :visible.sync="AddDialogVisible" width="50%">
+        <el-form :model="ruleForm" ref="ruleForm" label-width="120px" class="demo-ruleForm">
           <el-form-item label="收货地址">
-            <!-- <el-cascader size="large" :options="options" v-model="selectedOptions"
-              @change="handleChange">
-            </el-cascader> -->
+            <el-cascader size="large" :options="options" v-model="ruleForm.cityCode">
+            </el-cascader>
+          </el-form-item>
+          <el-form-item label="地址名称">
+            <el-input v-model="ruleForm.addressName" placeholder="地址名称"></el-input>
+          </el-form-item>
+          <el-form-item label="收货人姓名">
+            <el-input v-model="ruleForm.name" placeholder="收货人姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="收货人手机号">
+            <el-input v-model="ruleForm.phone" placeholder="收货人手机号"></el-input>
           </el-form-item>
           <el-form-item label="详细地址">
-            <el-input v-model="ruleForm.name" placeholder="详细地址"></el-input>
+            <el-input v-model="ruleForm.detailAddress" placeholder="详细地址"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="AddDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="AddDialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="addAddress">确 定</el-button>
         </span>
       </el-dialog>
 
@@ -69,7 +64,7 @@
 </template>
 
 <script>
-// import { regionData, CodeToText, TextToCode } from 'element-china-area-data'
+import { regionData, CodeToText } from 'element-china-area-data'
 
 export default {
   name: '',
@@ -78,14 +73,14 @@ export default {
       addressList: [],
       AddDialogVisible: false,
       ruleForm: {
-        name: ''
+        addressName: '',
+        name: '',
+        phone: '',
+        detailAddress: '',
+        cityCode: []
       },
-      ruleFormRules: {
-        name: [
-          { required: true, message: '发货地址不能为空', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 50 个字符', trigger: 'blur' }
-        ]
-      }
+      // 省市区联动地址
+      options: regionData // 省市区三级联动data
     }
   },
   created() {
@@ -111,7 +106,7 @@ export default {
       this.queryInfo.pageNum = newNum
       this.getaddressList()
     },
-    addAddress() {
+    showAddressDialog() {
       this.AddDialogVisible = true
     },
     editAddress() {
@@ -144,6 +139,24 @@ export default {
       }
       this.$message.success('删除地址成功')
       this.getaddressList()
+    },
+
+    async addAddress() {
+      const { data: res } = await this.$http.post('companyAddress/save', {
+        ...this.ruleForm,
+        cityCode: this.ruleForm.cityCode.join(','),
+        province: CodeToText[this.ruleForm.cityCode[0]],
+        city: CodeToText[this.ruleForm.cityCode[1]],
+        region: CodeToText[this.ruleForm.cityCode[2]]
+      })
+
+      if (res.code !== 20000) {
+        return this.$message.error('新增地址失败')
+      }
+      this.$message.success('新增地址成功')
+
+      this.AddDialogVisible = false
+      this.getaddressList()
     }
   }
 }
@@ -158,7 +171,8 @@ export default {
   line-height: 32px;
 }
 
-.el-input {
-  width: 40%;
+.el-input,
+.el-cascader {
+  width: 60%;
 }
 </style>
