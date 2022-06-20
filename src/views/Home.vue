@@ -2,7 +2,7 @@
   <el-container>
     <el-aside :width="isCollapse ? '64px' : '205px'">
       <el-menu :collapse="isCollapse" background-color="#304156" text-color="#bfcbd9" unique-opened
-        :router="true" :collapse-transition="false" :default-active="defaulActive">
+        :router="true" :collapse-transition="false" :default-active="$route.path">
         <el-menu-item index="/welcome" @click="goHome">
           <i class="el-icon-s-home"></i>
           <span slot="title">主页</span>
@@ -98,7 +98,6 @@ export default {
     return {
       isCollapse: false,
       menuList: [],
-      defaulActive: '/welcome',
       defaultFont: 'iconfont icon-daohangshouqi',
       fullScreenFont: 'iconfont icon-quanping_o',
       dialogVisible: false,
