@@ -37,7 +37,7 @@
           <el-form-item label="角色描述" prop="remark">
             <el-input v-model="ruleForm.remark"></el-input>
           </el-form-item>
-          <el-form-item label="选择菜单" prop="permissionIds">
+          <el-form-item label="选择菜单">
             <el-tree ref="tree" :props="props" :data="menuList" node-key="id"
               :default-checked-keys="defKeys" show-checkbox accordion>
             </el-tree>
@@ -45,33 +45,34 @@
 
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editAddUser">取 消</el-button>
+          <el-button @click="addAddUser">取 消</el-button>
           <el-button type="primary" @click="addRoles">确 定</el-button>
         </span>
       </el-dialog>
 
-      <!-- 编辑用户对话框 -->
+      <!-- 编辑角色对话框 -->
       <el-dialog title="提示" :visible.sync="editDialogVisible" width="50%">
-        <el-form :model="ruleForm" :rules="rules" ref="addUserFormRef" label-width="100px"
+        <el-form :model="ruleForm" :rules="rules" ref="editUserFormRef" label-width="100px"
           class="demo-ruleForm">
-          <el-form-item label="用户名" prop="username">
-            <el-input v-model="ruleForm.username" disabled></el-input>
+          <el-form-item label="角色昵称" prop="roleName">
+            <el-input v-model="ruleForm.roleName"></el-input>
           </el-form-item>
-          <el-form-item label="用户昵称" prop="nickName">
-            <el-input v-model="ruleForm.nick_name"></el-input>
+          <el-form-item label="角色编码" prop="roleCode">
+            <el-input v-model="ruleForm.roleCode"></el-input>
           </el-form-item>
-          <el-form-item label="选择角色" prop="permissionIds">
-            <el-select v-model="ruleForm.permissionIds" placeholder="请选择商品品牌" multiple>
-              <el-option v-for="item in roleSlist" :key="item.id" :label="item.roleName"
-                :value="item.id">
-              </el-option>
-            </el-select>
+          <el-form-item label="角色描述" prop="remark">
+            <el-input v-model="ruleForm.remark"></el-input>
+          </el-form-item>
+          <el-form-item label="选择菜单">
+            <el-tree ref="tree" :props="props" :data="menuList" node-key="id"
+              :default-checked-keys="ruleForm.permissionIds" show-checkbox accordion>
+            </el-tree>
           </el-form-item>
 
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="sureEditUser">确 定</el-button>
+          <el-button @click="editRoleDia">取 消</el-button>
+          <el-button type="primary" @click="sureEditRole">确 定</el-button>
         </span>
       </el-dialog>
 
@@ -99,11 +100,7 @@ export default {
       addDialogVisible: false,
       editDialogVisible: false,
       visible: false,
-      ruleForm: {
-        roleName: '',
-        roleCode: '',
-        remark: ''
-      },
+      ruleForm: {},
       rules: {
         roleName: [
           { required: true, message: '请输入橘色昵称', trigger: 'blur' }
@@ -126,7 +123,6 @@ export default {
       )
 
       this.menuList = res.data.permissionList
-      console.log(res.data.permissionList)
     },
     async getRolesList() {
       const { data: res } = await axios.get(
@@ -156,19 +152,12 @@ export default {
     },
     async editUser(e) {
       const { data: res } = await axios.get(
-        `http://leju.bufan.cloud/admin/sysAuth/user/${e.id}`
+        `http://leju.bufan.cloud/admin/sysAuth/role/findRolePermissions/${e.id}`
       )
 
-      const user = {
-        id: res.data.user.id,
-        username: res.data.user.username,
-        nick_name: res.data.user.nickName,
-        password: e.password,
-        permissionIds: [...res.data.user.permissionIds],
-        create_time: res.data.user.createTime
-      }
+      console.log(res)
 
-      this.ruleForm = user
+      this.ruleForm = res.data.role
       this.editDialogVisible = true
     },
     async delUser(e) {
@@ -191,23 +180,24 @@ export default {
       }
 
       const { data: res } = await axios.delete(
-        `http://leju.bufan.cloud/admin/sysAuth/user/removeUser/${e.id}`
+        `http://leju.bufan.cloud/admin/sysAuth/role/removeRole/${e.id}`
       )
 
       if (res.code !== 20000) {
-        return this.$message.error('删除用户失败')
+        return this.$message.error('删除角色失败')
       }
-      this.$message.success('删除用户成功')
+      this.$message.success('删除角色成功')
 
-      this.getUserList()
+      this.getRolesList()
     },
-    async sureEditUser() {
+    async sureEditRole() {
       const { data: res } = await axios.put(
-        'http://leju.bufan.cloud/admin/sysAuth/user/updateUserRoles',
+        'http://leju.bufan.cloud/admin/sysAuth/role/updateRolePermissions',
         {
-          username: this.ruleForm.username,
+          remark: this.ruleForm.remark,
           id: this.ruleForm.id,
-          nickName: this.ruleForm.nick_name,
+          roleCode: this.ruleForm.roleCode,
+          roleName: this.ruleForm.roleName,
           permissionIds: this.ruleForm.permissionIds
         }
       )
@@ -216,12 +206,16 @@ export default {
         return this.$message.error('编辑用户失败')
       }
       this.$message.success('编辑用户成功')
-      this.getUserList()
+      this.getRolesList()
       this.editDialogVisible = false
     },
-    editAddUser() {
+    addAddUser() {
       this.$refs.addUserFormRef.resetFields()
       this.addDialogVisible = false
+    },
+    editRoleDia() {
+      this.$refs.editUserFormRef.resetFields()
+      this.editDialogVisible = false
     }
   }
 }
