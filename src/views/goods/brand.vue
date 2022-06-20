@@ -4,23 +4,21 @@
       <el-button type="primary" @click="dialogVisible = true">新增品牌</el-button>
       <!-- 新增品牌提示框 -->
       <el-dialog title="新增品牌" :visible.sync="dialogVisible" width="60%">
-        <el-form :model="brandForm" :rules="rules" ref="brandForm" label-width="100px"
+        <el-form :model="brandForm" :rules="rules" ref="addBrandFormRef" label-width="100px"
           class="demo-brandForm">
-
           <el-form-item label="品牌名称" prop="name">
             <el-input v-model="brandForm.name" placeholder="请输入品牌名称"></el-input>
           </el-form-item>
-          <el-form-item label="品牌故事">
+          <el-form-item label="品牌故事" prop="brandStory">
             <el-input v-model="brandForm.brandStory" placeholder="请输入品牌故事"></el-input>
           </el-form-item>
           <el-form-item label="状态">
             <el-switch v-model="brandForm.showStatus" :active-value="1" :inactive-value="0">
             </el-switch>
-
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="editAddBrand">取 消</el-button>
           <el-button type="primary" @click="addBrand">确 定</el-button>
         </span>
       </el-dialog>
@@ -175,6 +173,10 @@ export default {
 
       this.dialogVisible = false
       this.getBrandList()
+    },
+    editAddBrand() {
+      this.$refs.addBrandFormRef.resetFields()
+      this.dialogVisible = false
     },
     showEditDialog(e) {
       this.editDialogVisible = true

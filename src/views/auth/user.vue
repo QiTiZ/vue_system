@@ -5,7 +5,7 @@
 
       <!-- 新增角色对话框 -->
       <el-dialog title="提示" :visible.sync="addDialogVisible" width="50%">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px"
+        <el-form :model="ruleForm" :rules="rules" ref="addUserFormRef" label-width="100px"
           class="demo-ruleForm">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="ruleForm.username"></el-input>
@@ -14,7 +14,7 @@
             <el-input v-model="ruleForm.nick_name"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="ruleForm.password"></el-input>
+            <el-input v-model="ruleForm.password" show-password></el-input>
           </el-form-item>
           <el-form-item label="选择角色" prop="roleIds">
             <el-select v-model="ruleForm.roleIds" placeholder="请选择商品品牌" multiple>
@@ -26,7 +26,7 @@
 
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="addDialogVisible = false">取 消</el-button>
+          <el-button @click="editAddUser">取 消</el-button>
           <el-button type="primary" @click="addUsername">确 定</el-button>
         </span>
       </el-dialog>
@@ -51,11 +51,37 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="editGoods(scope)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="delUsername(scope.row)">删除</el-button>
+            <el-button size="mini" type="primary" @click="editUser(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="delUser(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 编辑用户对话框 -->
+      <el-dialog title="提示" :visible.sync="editDialogVisible" width="50%">
+        <el-form :model="ruleForm" :rules="rules" ref="addUserFormRef" label-width="100px"
+          class="demo-ruleForm">
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="ruleForm.username"></el-input>
+          </el-form-item>
+          <el-form-item label="用户昵称" prop="nickName">
+            <el-input v-model="ruleForm.nickName"></el-input>
+          </el-form-item>
+          <el-form-item label="选择角色" prop="roleIds">
+            <el-select v-model="ruleForm.roleIds" placeholder="请选择商品品牌" multiple>
+              <el-option v-for="item in roleSlist" :key="item.id" :label="item.roleName"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="sureEditUser">确 定</el-button>
+        </span>
+      </el-dialog>
+
     </el-card>
   </div>
 </template>
@@ -74,23 +100,21 @@ export default {
       userList: [],
       roleSlist: [],
       addDialogVisible: false,
+      editDialogVisible: false,
       visible: false,
       ruleForm: {
+        id: '',
         username: '',
-        nick_name: '',
-        password: '',
         roleIds: []
       },
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        nick_name: [
+        nickName: [
           { required: true, message: '请输入用户昵称', trigger: 'blur' }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        roleIds: [{ required: true, message: '请选择角色', trigger: 'blur' }]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
     }
   },
@@ -109,7 +133,6 @@ export default {
       }
       this.userList = res.data.rows
       this.total = res.data.total
-      console.log(this.userList)
     },
     async getRolesList() {
       const { data: res } = await axios.get(
@@ -136,7 +159,24 @@ export default {
       this.addDialogVisible = false
       this.getUserList()
     },
-    async delUsername(e) {
+    async editUser(e) {
+      const { data: res } = await axios.get(
+        `http://leju.bufan.cloud/admin/sysAuth/user/${e.id}`
+      )
+
+      const user = {
+        id: res.data.user.id,
+        username: res.data.user.username,
+        nick_name: res.data.user.nickName,
+        password: e.password,
+        roleIds: [...res.data.user.roleIds],
+        create_time: res.data.user.createTime
+      }
+
+      this.ruleForm = user
+      this.editDialogVisible = true
+    },
+    async delUser(e) {
       console.log(e)
       const confirmDemo = await this.$confirm(
         '此操作将永久删除该用户, 是否继续?',
@@ -165,6 +205,25 @@ export default {
       this.$message.success('删除用户成功')
 
       this.getUserList()
+    },
+    async sureEditUser() {
+      const { data: res } = await axios.put(
+        'http://leju.bufan.cloud/admin/sysAuth/user/updateUserRoles',
+        {
+          ...this.ruleForm
+        }
+      )
+
+      if (res.code !== 20000) {
+        return this.$message.error('编辑用户失败')
+      }
+      this.$message.success('编辑用户成功')
+      this.getUserList()
+      this.editDialogVisible = false
+    },
+    editAddUser() {
+      this.$refs.addUserFormRef.resetFields()
+      this.addDialogVisible = false
     }
   }
 }

@@ -6,7 +6,7 @@
           <el-card>
             <el-avatar :size="100" src="https://pic.imgdb.cn/item/62a3fba609475431292da0f9.jpg">
             </el-avatar>
-            <div class="username">ZSS</div>
+            <div class="username">SSS</div>
             <div class="personal">
               <i class="el-icon-s-custom">
                 <em>前端专家</em>

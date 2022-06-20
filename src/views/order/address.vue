@@ -2,27 +2,27 @@
   <div>
     <el-card>
       <el-button type="primary" @click="showAddressDialog">新增地址</el-button>
-      <el-dialog title="新增地址" :visible.sync="AddDialogVisible" width="50%" @close="addAddressClose">
-        <el-form :model="ruleForm" ref="addAddressRef" label-width="120px">
-          <el-form-item label="收货地址">
+      <el-dialog title="新增地址" :visible.sync="AddDialogVisible" width="50%">
+        <el-form :model="ruleForm" ref="addAddressFormRef" label-width="120px">
+          <el-form-item label="收货地址" prop="cityCode">
             <el-cascader size="large" :options="options" v-model="ruleForm.cityCode">
             </el-cascader>
           </el-form-item>
-          <el-form-item label="地址名称">
+          <el-form-item label="地址名称" prop="addressName">
             <el-input v-model="ruleForm.addressName" placeholder="地址名称"></el-input>
           </el-form-item>
-          <el-form-item label="收货人姓名">
+          <el-form-item label="收货人姓名" prop="name">
             <el-input v-model="ruleForm.name" placeholder="收货人姓名"></el-input>
           </el-form-item>
-          <el-form-item label="收货人手机号">
+          <el-form-item label="收货人手机号" prop="phone">
             <el-input v-model="ruleForm.phone" placeholder="收货人手机号"></el-input>
           </el-form-item>
-          <el-form-item label="详细地址">
+          <el-form-item label="详细地址" prop="detailAddress">
             <el-input v-model="ruleForm.detailAddress" placeholder="详细地址"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="AddDialogVisible = false">取 消</el-button>
+          <el-button @click="cancelAddAddress">取 消</el-button>
           <el-button type="primary" @click="addAddress">确 定</el-button>
         </span>
       </el-dialog>
@@ -175,8 +175,9 @@ export default {
       this.$message.success('删除地址成功')
       this.getaddressList()
     },
-    addAddressClose() {
-      this.$refs.addAddressRef.resetFields()
+    cancelAddAddress() {
+      this.$refs.addAddressFormRef.resetFields()
+      this.AddDialogVisible = false
     },
     async addAddress() {
       const { data: res } = await this.$http.post('companyAddress/save', {
