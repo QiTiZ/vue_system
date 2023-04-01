@@ -5,7 +5,7 @@
         :router="true" :collapse-transition="false" :default-active="$route.path">
         <el-menu-item index="/welcome" @click="goHome">
           <i class="el-icon-s-home"></i>
-          <span slot="title">主页</span>
+          <span slot="title">主页111</span>
         </el-menu-item>
         <el-submenu index="/auth">
           <template slot="title">
