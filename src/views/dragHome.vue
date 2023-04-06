@@ -2,7 +2,6 @@
   <div id="darag" style="height: 100%">
     <!-- 组件库 -->
     <section class="left">
-      <!--标题-->
       <h4>组件库</h4>
       <ul @dragend="dragEnd" @dragstart="dragStart">
         <!-- 添加自定义属性 data-type -->
