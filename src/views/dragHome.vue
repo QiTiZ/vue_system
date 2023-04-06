@@ -3,7 +3,6 @@
     <!-- 组件库 -->
     <section class="left">
       <!--标题-->
-      <div>vscode测试</div>
       <h4>组件库</h4>
       <ul @dragend="dragEnd" @dragstart="dragStart">
         <!-- 添加自定义属性 data-type -->
