@@ -9,6 +9,11 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
+    path: '/pos',
+    meta: { title: '小票打印模板' },
+    component: () => import('../views/dragHome.vue')
+  },
+  {
     path: '/home',
     component: () => import('../views/Home.vue'),
     children: [

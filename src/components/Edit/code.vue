@@ -77,8 +77,10 @@ export default {
       }
     },
     codeHeight: {
+      // eslint-disable-next-line vue/return-in-computed-property
       get() {
         if (this.list.fieldSize) {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.list.height = this.list.fieldSize * 10 + ''
           return this.list.fieldSize * 10 + ''
         }
@@ -291,7 +293,6 @@ export default {
     margin-right: 10px;
   }
 }
-
 
 .el-input {
   width: 60%;

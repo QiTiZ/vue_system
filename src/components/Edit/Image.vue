@@ -60,13 +60,13 @@
 </template>
 
 <script>
-import {Loading} from 'element-ui';
+import { Loading } from 'element-ui';
 
 export default {
   name: 'imageEdit',
   data() {
     return {
-      myHeaders: {AuthToken: sessionStorage.getItem("mytoken")},
+      myHeaders: { AuthToken: sessionStorage.getItem("mytoken") },
       list: {
         val: '',
       },
@@ -103,14 +103,14 @@ export default {
         // 动画中的文字
         text: '加载中',
       });
-      //拿数据方法
+      // 拿数据方法
       if (file) {
         let reader = new FileReader()
         reader.onload = () => {
           let base64 = event.target.result
           let img = document.createElement('img')
           img.src = base64
-          img.onload = function () { //注意只有onload以后才可以拿到图片信息
+          img.onload = function () { // 注意只有onload以后才可以拿到图片信息
             that.list.width = img.width
             that.list.height = img.height
           }
@@ -132,7 +132,6 @@ export default {
       } else {
         this.$message.error("图片上传失败！");
       }
-
     },
     align(event) {
       this.list.align = event;
@@ -176,7 +175,6 @@ export default {
     margin-right: 10px;
   }
 }
-
 
 .el-input {
   width: 70%;

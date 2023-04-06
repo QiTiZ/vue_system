@@ -42,22 +42,26 @@ export default {
     }
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     width() {
       if (this.list.width) {
         return this.list.width / 2 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     height() {
       if (this.list.height) {
         return this.list.height / 2 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";
       }
     },
     // 标题显示位置
+    // eslint-disable-next-line vue/return-in-computed-property
     align() {
       if (this.list.align === "left") {
         return "left";

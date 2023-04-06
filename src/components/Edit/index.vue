@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import hb_Info from "@/components/Edit/Info";
-import hb_Images from "@/components/Edit/Image";
-import hb_text from "@/components/Edit/text";
-import h_DoubleText from "@/components/Edit/doubleText.vue";
+import info from "@/components/Edit/Info";
+import images from "@/components/Edit/Image";
+import text from "@/components/Edit/text";
+import doubleText from "@/components/Edit/doubleText.vue";
 import sixText from "@/components/Edit/sixText.vue";
-import hb_divider from "@/components/Edit/divider";
-import h_code from "@/components/Edit/code.vue";
-import h_barcode from '@/components/Edit/barcode.vue';
+import divider from "@/components/Edit/divider";
+import code from "@/components/Edit/code.vue";
+import barcode from '@/components/Edit/barcode.vue';
 import textArea from "@/components/Edit/textArea.vue";
 import none from '@/components/Edit/none.vue'
 import fiveText from '@/components/Edit/five.vue'
@@ -20,16 +20,17 @@ import fiveText from '@/components/Edit/five.vue'
 export default {
   name: "EditForm",
   components: {
-    hb_Info,
-    hb_Images,
-    hb_divider,
-    hb_text,
-    h_DoubleText,
+    info,
+    images,
+    divider,
+    text,
+    doubleText,
     sixText,
-    h_code,
+    code,
     textArea,
-    h_barcode,
-    none, fiveText
+    barcode,
+    none,
+    fiveText
   },
   props: {
     data: {
@@ -44,11 +45,11 @@ export default {
       list: {
         TEXT: {
           tit: "文本",
-          com: hb_text,
+          com: text,
         },
         doubletext: {
           tit: "文本",
-          com: h_DoubleText,
+          com: doubleText,
         },
         textArea: {
           tit: "文本",
@@ -64,15 +65,15 @@ export default {
         },
         info: {
           tit: "页面信息",
-          com: hb_Info,
+          com: info,
         },
         image: {
           tit: "图片",
-          com: hb_Images,
+          com: images,
         },
         divider: {
           tit: "辅助空白",
-          com: hb_divider,
+          com: divider,
         },
         none: {
           tit: "辅助空白",
@@ -80,11 +81,11 @@ export default {
         },
         code: {
           tit: "辅助空白",
-          com: h_code,
+          com: code,
         },
         barccc: {
           tit: "辅助空白",
-          com: h_barcode,
+          com: barcode,
         },
       },
       tabType: {

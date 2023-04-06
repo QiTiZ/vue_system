@@ -45,43 +45,56 @@ export default {
     this.list = this.data;
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     width() {
       if (this.list.width) {
         return this.list.width + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     height() {
       if (this.list.height) {
         return this.list.height + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     left() {
       if (this.list.left) {
         return this.list.left / 1.79 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     left1() {
       if (this.list.left1) {
         return this.list.left1 / 1.79 + "px";
       }
-    }, left2() {
+    },
+    // eslint-disable-next-line vue/return-in-computed-property
+    left2() {
       if (this.list.left2) {
         return this.list.left2 / 1.79 + "px";
       }
-    }, left3() {
+    },
+    // eslint-disable-next-line vue/return-in-computed-property
+    left3() {
       if (this.list.left3) {
         return this.list.left3 / 1.79 + "px";
       }
-    }, left4() {
+    },
+    // eslint-disable-next-line vue/return-in-computed-property
+    left4() {
       if (this.list.left4) {
         return this.list.left4 / 1.79 + "px";
       }
-    }, left5() {
+    },
+    // eslint-disable-next-line vue/return-in-computed-property
+    left5() {
       if (this.list.left5) {
         return this.list.left5 / 1.79 + "px";
       }
@@ -97,6 +110,7 @@ export default {
       }
     },
     // 标题显示位置
+    // eslint-disable-next-line vue/return-in-computed-property
     align() {
       if (this.list.align === "left") {
         return "left";
@@ -146,6 +160,5 @@ export default {
     font-size: 13.5px;
   }
 }
-
 
 </style>

@@ -65,7 +65,6 @@ export default {
   margin-bottom: 20px;
 }
 
-
 .el-input {
   width: 60%;
 }

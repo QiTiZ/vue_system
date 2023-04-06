@@ -266,7 +266,6 @@ export default {
 
 }
 
-
 .el-input {
   width: 60%;
 }

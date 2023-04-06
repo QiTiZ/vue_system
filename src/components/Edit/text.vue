@@ -181,5 +181,4 @@ export default {
   color: #ab28be;
 }
 
-
 </style>

@@ -2,7 +2,6 @@
     <div class="text" :style="{  marginTop:top }">
       <span class="left">   {{ list.val || '--------' }}</span>
     </div>
-  </div>
 </template>
 
 <script>
@@ -35,6 +34,7 @@ export default {
     }
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";

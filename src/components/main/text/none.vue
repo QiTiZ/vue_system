@@ -22,6 +22,7 @@ export default {
     this.list = this.data;
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";

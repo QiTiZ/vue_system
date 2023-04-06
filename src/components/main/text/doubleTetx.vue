@@ -34,26 +34,31 @@ export default {
     this.list = this.data;
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     width() {
       if (this.list.width) {
         return this.list.width + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     height() {
       if (this.list.height) {
         return this.list.height + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     left() {
       if (this.list.left) {
         return this.list.left / 1.79 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     left1() {
       if (this.list.left1) {
         return this.list.left1 / 1.79 + "px";
@@ -70,6 +75,7 @@ export default {
       }
     },
     // 标题显示位置
+    // eslint-disable-next-line vue/return-in-computed-property
     align() {
       if (this.list.align === "left") {
         return "left";

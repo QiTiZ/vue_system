@@ -44,22 +44,26 @@ export default {
     },
   },
   computed: {
+    // eslint-disable-next-line vue/return-in-computed-property
     width() {
       if (this.list.fieldSize) {
         return this.list.fieldSize * 2.2 + '%'
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     height() {
       if (this.list.fieldSize) {
         return this.list.fieldSize * 8 + "px";
       }
     },
+    // eslint-disable-next-line vue/return-in-computed-property
     top() {
       if (this.list.top) {
         return this.list.top / 5 + "px";
       }
     },
     // 标题显示位置
+    // eslint-disable-next-line vue/return-in-computed-property
     align() {
       if (this.list.align === "left") {
         return "left";
@@ -73,6 +77,7 @@ export default {
   methods: {
     // 生成二维码
     creatQrCode() {
+      // eslint-disable-next-line no-unused-vars
       let qrcode = new QRCode(this.$refs.qrCodeUrl, {
         text: this.list.val ? this.list.val : 'https://mp.weixin.qq.com',
         colorDark: '#000000',
@@ -84,7 +89,6 @@ export default {
       // width: this.list.width ? this.list.width : '100',
       // height: this.list.height ? this.list.height : '100',
       this.getImg()
-
     },
     getImg() {
       var canvasData = this.$refs.qrCodeUrl.getElementsByTagName('canvas')
